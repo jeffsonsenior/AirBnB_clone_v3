@@ -2,14 +2,14 @@
 """ holds class Review"""
 import models
 from models.base_model import BaseModel, Base
-from os import getenv
+import os
 import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
-
+storage_type = os.environ.get('HBNB_TYPE_STORAGE')
 
 class Review(BaseModel, Base):
     """Representation of Review """
-    if models.storage_t == 'db':
+    if storage_type == 'db':
         __tablename__ = 'reviews'
         place_id = Column(String(60), ForeignKey('places.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
