@@ -51,4 +51,3 @@ def city_create(state_id):
     resp.status_code = 201
 
     return resp
-

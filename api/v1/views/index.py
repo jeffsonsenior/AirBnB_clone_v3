@@ -16,7 +16,7 @@ def status():
     data = {
         "status": "OK"
     }
-    
+
     resp = jsonify(data)
     resp.status_code = 200
 
