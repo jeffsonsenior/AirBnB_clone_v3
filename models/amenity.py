@@ -17,3 +17,12 @@ class Amenity(BaseModel, Base):
         place_amenities = relationship("Place", secondary="place_amenity")
     else:
         name = ''
+
+    def to_dict(self):
+        """convert instance attributes to a dictionary"""
+        return {
+            'id': self.id,
+            'created_at': self.created_at.isoformat(),
+            'updated_at': self.updated_at.isoformat(),
+            '__class__': self.__class__.__name__
+        }

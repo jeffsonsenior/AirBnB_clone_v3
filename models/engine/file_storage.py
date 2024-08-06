@@ -61,6 +61,7 @@ class FileStorage:
         :return: number of objects
         """
         return len(self.all(cls))
+
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         json_objects = {}

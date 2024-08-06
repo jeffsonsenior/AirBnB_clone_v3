@@ -23,7 +23,7 @@ else:
 
 class BaseModel:
     """The BaseModel class from which future classes will be derived"""
-    if models.storage_t == "db":
+    if storage_type == "db":
         id = Column(String(60), primary_key=True)
         created_at = Column(DateTime, nullable=False,
                             default=datetime.utcnow())
@@ -37,12 +37,13 @@ class BaseModel:
         if kwargs:
             for key, value in kwargs.items():
                 setattr(self, key, value)
+        self.updated_at = self.created_at
 
     def __is_serializable(self, obj_v):
         """checks if object is serializable"""
         try:
             obj_to_str = json.dumps(obj_v)
-            return obj_to_str is not None in isiinstance(obj_to_str, str)
+            return obj_to_str is None not in isiinstance(obj_to_str, str)
         except:
             return False
 
@@ -58,6 +59,15 @@ class BaseModel:
             self.updated_at = datetime.utcnow()
         models.storage.new(self)
         models.storage.save()
+
+    def to_dict(self):
+        """convert instance to dictionary format"""
+        return {
+            'id': self.id,
+            'created_at': self.created_at.isoformat(),
+            'updated_at': self.updated_at.isoformat(),
+            '__class__': self.__class__.__name__
+        }
 
     def to_json(self):
         """returns json representation"""
